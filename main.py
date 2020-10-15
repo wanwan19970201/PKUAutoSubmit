@@ -148,6 +148,20 @@ def submit(driver):
     driver.find_element_by_xpath(
         '(//button/span[contains(text(),"提交")])[3]').click()
     time.sleep(TIMESLP)
+    
+def screen_capture(driver):
+    driver.back()
+    driver.back()
+    WebDriverWait(driver, 5).until(
+        EC.visibility_of_element_located((By.CLASS_NAME, 'el-card__body')))
+    driver.find_elements_by_class_name('el-card__body')[1].click()
+    WebDriverWait(driver, 5).until(
+        EC.visibility_of_element_located(
+            (By.XPATH, '//button/span[contains(text(),"加载更多")]')))
+    driver.maximize_window()
+    time.sleep(0.1)
+    driver.save_screenshot('result.png')
+    print('备案历史截图已保存')
 
 
 def fill_out(driver, campus, reason, destination, track):
@@ -219,8 +233,11 @@ def run(driver, username, password, campus, reason, destination, track,
 
     go_to_application_in(driver)
     fill_in(driver, campus, reason, habitation, district, street)
-
     print('=================================')
+    
+    screen_capture(driver)
+    print('=================================')
+    
     print('可以愉快的玩耍啦！')
 
 
