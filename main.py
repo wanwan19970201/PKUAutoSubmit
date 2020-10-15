@@ -28,8 +28,8 @@ def mail():
     try:
         cur_time = time.strftime("%d/%m/%Y")
         msgRoot = MIMEMultipart('related')
-        msgRoot['From'] = Header('小a', 'utf-8')
-        msgRoot['To'] = Header('小p', 'utf-8')
+        msgRoot['From'] = Header('PKU-AutoSubmit', 'utf-8')
+        msgRoot['To'] = Header('student', 'utf-8')
         subject = cur_time + ' 报备成功 '
         msgRoot['Subject'] = Header(subject, 'utf-8')
 
