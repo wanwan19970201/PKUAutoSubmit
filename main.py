@@ -20,7 +20,7 @@ from email.header import Header
 
 my_sender = '1692484707@qq.com'  # 发件人邮箱账号
 my_pass = 'fujkixpkjiyhcaji'  # 发件人邮箱密码
-my_user = 'anton1554970211@126.com'  # 收件人邮箱账号
+my_user = '1900092917@pku.edu.cn'  # 收件人邮箱账号
 
 
 def mail():
