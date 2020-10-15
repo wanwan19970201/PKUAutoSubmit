@@ -283,9 +283,10 @@ def run(driver, username, password, campus, reason, destination, track,
     print('=================================')
     
     url = screen_capture(driver)
+    print(url)
     print('=================================')
      
-    ret = mail(url)
+    #ret = mail(url)
     if ret:
         print("邮件发送成功")
     else:
