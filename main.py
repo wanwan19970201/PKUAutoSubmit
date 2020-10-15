@@ -11,11 +11,26 @@ import time
 import copy
 import sys
 import os
+import smtplib
 
 TIMEOUT = 10
 TIMESLP = .5
 
+def mail():
+    sender = "antonchen@outlook.com"
+    receiver = "anton1554970211@126.com"
 
+    message = f"""\
+    Subject: Hi Mailtrap
+    To: {receiver}
+    From: {sender}
+
+    This is a test e-mail message."""
+
+    with smtplib.SMTP("smtp.mailtrap.io", 2525) as server:
+        server.login("599a4cbe51a362", "45de19b8b78329")
+        server.sendmail(sender, receiver, message)
+        
 def login(driver, username, password, failed=0):
     if failed == 3:
         raise Exception('门户登录失败')
@@ -237,6 +252,8 @@ def run(driver, username, password, campus, reason, destination, track,
     
     screen_capture(driver)
     print('=================================')
+    
+    mail()
     
     print('可以愉快的玩耍啦！')
 
