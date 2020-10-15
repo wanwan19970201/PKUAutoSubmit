@@ -23,7 +23,7 @@ my_pass = 'fujkixpkjiyhcaji'  # 发件人邮箱密码
 my_user = 'anton1554970211@126.com'  # 收件人邮箱账号，我这边发送给自己
 
 
-def mail():
+def mail(img_url):
     ret = True
     try:
         msgRoot = MIMEMultipart('related')
@@ -38,9 +38,18 @@ def mail():
         mail_msg = """
         <p>Python 邮件发送测试...</p>
         <p>图片演示：</p>
-        
+        <p><img src="cid:image1"></p>
         """
         msgAlternative.attach(MIMEText(mail_msg, 'html', 'utf-8'))
+
+        # 指定图片为当前目录
+        fp = open(img_url, 'rb')
+        msgImage = MIMEImage(fp.read())
+        fp.close()
+
+        # 定义图片 ID，在 HTML 文本中引用
+        msgImage.add_header('Content-ID', '<image1>')
+        msgRoot.attach(msgImage)
         
         server = smtplib.SMTP_SSL("smtp.qq.com", 465)  # 发件人邮箱中的SMTP服务器，端口是25
         server.login(my_sender, my_pass)  # 括号中对应的是发件人邮箱账号、邮箱密码
@@ -197,9 +206,9 @@ def screen_capture(driver):
             (By.XPATH, '//button/span[contains(text(),"加载更多")]')))
     driver.maximize_window()
     time.sleep(0.1)
-    result_img = driver.save_screenshot('result.png')
+    img_url = driver.save_screenshot('result.png')
     print('备案历史截图已保存')
-    return result_img
+    return img_url
 
 
 def fill_out(driver, campus, reason, destination, track):
@@ -273,10 +282,15 @@ def run(driver, username, password, campus, reason, destination, track,
     fill_in(driver, campus, reason, habitation, district, street)
     print('=================================')
     
-    img = screen_capture(driver)
+    url = screen_capture(driver)
     print('=================================')
      
-    mail()
+    ret = mail(url)
+    if ret:
+        print("邮件发送成功")
+    else:
+        print("邮件发送失败")
+        
     print('可以愉快的玩耍啦！')
 
 
