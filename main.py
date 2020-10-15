@@ -47,7 +47,7 @@ def mail():
     message.attach(part)
 
     # We assume that the image file is in the same directory that you run your Python script from
-    fp = open('mailtrap.jpg', 'rb')
+    fp = open('result.png', 'rb')
     image = MIMEImage(fp.read())
     fp.close()
 
@@ -207,7 +207,7 @@ def screen_capture(driver):
             (By.XPATH, '//button/span[contains(text(),"加载更多")]')))
     driver.maximize_window()
     time.sleep(0.1)
-    driver.save_screenshot('result.png')
+    img = driver.save_screenshot('result.png')
     print('备案历史截图已保存')
 
 
