@@ -12,6 +12,9 @@ import copy
 import sys
 import os
 
+TIMEOUT = 10
+TIMESLP = .5
+
 def login(driver, username, password, failed=0):
     if failed == 3:
         raise Exception('门户登录失败')
