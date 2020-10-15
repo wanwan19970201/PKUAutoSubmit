@@ -30,7 +30,7 @@ def mail():
         msgRoot = MIMEMultipart('related')
         msgRoot['From'] = Header('PKU-AutoSubmit', 'utf-8')
         msgRoot['To'] = Header('student', 'utf-8')
-        subject = cur_time + ' 报备成功 '
+        subject = cur_time + ' 报备成功'
         msgRoot['Subject'] = Header(subject, 'utf-8')
 
         msgAlternative = MIMEMultipart('alternative')
