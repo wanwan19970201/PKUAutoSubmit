@@ -23,7 +23,7 @@ my_pass = 'fujkixpkjiyhcaji'  # 发件人邮箱密码
 my_user = 'anton1554970211@126.com'  # 收件人邮箱账号，我这边发送给自己
 
 
-def mail(img_url):
+def mail():
     ret = True
     try:
         msgRoot = MIMEMultipart('related')
@@ -43,7 +43,7 @@ def mail(img_url):
         msgAlternative.attach(MIMEText(mail_msg, 'html', 'utf-8'))
 
         # 指定图片为当前目录
-        fp = open(img_url, 'rb')
+        fp = open('result.png', 'rb')
         msgImage = MIMEImage(fp.read())
         fp.close()
 
@@ -206,10 +206,8 @@ def screen_capture(driver):
             (By.XPATH, '//button/span[contains(text(),"加载更多")]')))
     driver.maximize_window()
     time.sleep(0.1)
-    img_url = driver.save_screenshot('result.png')
+    driver.save_screenshot('result.png')
     print('备案历史截图已保存')
-    return img_url
-
 
 def fill_out(driver, campus, reason, destination, track):
     print('开始填报出校备案')
@@ -282,11 +280,10 @@ def run(driver, username, password, campus, reason, destination, track,
     fill_in(driver, campus, reason, habitation, district, street)
     print('=================================')
     
-    url = screen_capture(driver)
-    print(url)
+    screen_capture(driver)
     print('=================================')
      
-    #ret = mail(url)
+    ret = mail()
     if ret:
         print("邮件发送成功")
     else:
