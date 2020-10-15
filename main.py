@@ -20,24 +20,25 @@ from email.header import Header
 
 my_sender = '1692484707@qq.com'  # 发件人邮箱账号
 my_pass = 'fujkixpkjiyhcaji'  # 发件人邮箱密码
-my_user = 'anton1554970211@126.com'  # 收件人邮箱账号，我这边发送给自己
+my_user = 'anton1554970211@126.com'  # 收件人邮箱账号
 
 
 def mail():
     ret = True
     try:
+        cur_time = time.strftime("%d/%m/%Y")
         msgRoot = MIMEMultipart('related')
-        msgRoot['From'] = Header("自动报备", 'utf-8')
-        msgRoot['To'] = Header("测试", 'utf-8')
-        subject = 'Python SMTP 邮件测试'
+        msgRoot['From'] = Header('小a', 'utf-8')
+        msgRoot['To'] = Header('小p', 'utf-8')
+        subject = cur_time + ' 报备成功 '
         msgRoot['Subject'] = Header(subject, 'utf-8')
 
         msgAlternative = MIMEMultipart('alternative')
         msgRoot.attach(msgAlternative)
 
         mail_msg = """
-        <p>Python 邮件发送测试...</p>
-        <p>图片演示：</p>
+        <p>自动报备成功！</p>
+        <p>截图：</p>
         <p><img src="cid:image1"></p>
         """
         msgAlternative.attach(MIMEText(mail_msg, 'html', 'utf-8'))
