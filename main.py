@@ -12,6 +12,54 @@ import copy
 import sys
 import os
 
+import smtplib
+from email.mime.image import MIMEImage
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.header import Header
+
+my_sender = '1692484707@qq.com'  # 发件人邮箱账号
+my_pass = 'fujkixpkjiyhcaji'  # 发件人邮箱密码
+my_user = 'anton1554970211@126.com'  # 收件人邮箱账号，我这边发送给自己
+
+
+def mail(img):
+    ret = True
+    try:
+        msgRoot = MIMEMultipart('related')
+        msgRoot['From'] = Header("自动报备", 'utf-8')
+        msgRoot['To'] = Header("测试", 'utf-8')
+        subject = 'Python SMTP 邮件测试'
+        msgRoot['Subject'] = Header(subject, 'utf-8')
+
+        msgAlternative = MIMEMultipart('alternative')
+        msgRoot.attach(msgAlternative)
+
+        mail_msg = """
+        <p>Python 邮件发送测试...</p>
+        <p>图片演示：</p>
+        <p><img src="cid:image1"></p>
+        """
+        msgAlternative.attach(MIMEText(mail_msg, 'html', 'utf-8'))
+
+        # 指定图片为当前目录
+        fp = open(img, 'rb')
+        msgImage = MIMEImage(fp.read())
+        fp.close()
+
+        # 定义图片 ID，在 HTML 文本中引用
+        msgImage.add_header('Content-ID', '<image1>')
+        msgRoot.attach(msgImage)
+
+        server = smtplib.SMTP_SSL("smtp.qq.com", 465)  # 发件人邮箱中的SMTP服务器，端口是25
+        server.login(my_sender, my_pass)  # 括号中对应的是发件人邮箱账号、邮箱密码
+        server.sendmail(my_sender, [my_user, ], msgRoot.as_string())  # 括号中对应的是发件人邮箱账号、收件人邮箱账号、发送邮件
+        server.quit()  # 关闭连接
+    except Exception:  # 如果 try 中的语句没有执行，则会执行下面的 ret=False
+        ret = False
+    return ret
+
+
 TIMEOUT = 10
 TIMESLP = .5
 
@@ -159,8 +207,9 @@ def screen_capture(driver):
             (By.XPATH, '//button/span[contains(text(),"加载更多")]')))
     driver.maximize_window()
     time.sleep(0.1)
-    img = driver.save_screenshot('result.png')
+    result_img = driver.save_screenshot('result.png')
     print('备案历史截图已保存')
+    return result_img
 
 
 def fill_out(driver, campus, reason, destination, track):
@@ -234,9 +283,10 @@ def run(driver, username, password, campus, reason, destination, track,
     fill_in(driver, campus, reason, habitation, district, street)
     print('=================================')
     
-    screen_capture(driver)
+    img = screen_capture(driver)
     print('=================================')
-      
+     
+    mail(img)
     print('可以愉快的玩耍啦！')
 
 
