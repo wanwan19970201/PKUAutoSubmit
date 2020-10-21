@@ -20,7 +20,7 @@ from email.header import Header
 
 my_sender = '1692484707@qq.com'  # 发件人邮箱账号
 my_pass = 'fujkixpkjiyhcaji'  # 发件人邮箱密码
-my_user = '1900092917@pku.edu.cn'  # 收件人邮箱账号
+my_user = '475138359@qq.com'  # 收件人邮箱账号
 
 
 def mail():
@@ -302,8 +302,8 @@ if __name__ == '__main__':
     parser.add_argument('--destination', type=str, help='出校目的地, eg. 北京', default='北京')
     parser.add_argument('--track', type=str, help='出校轨迹, eg. 畅春园食堂', default='东南门-理教-东南门')
     parser.add_argument('--habitation', type=str, help='入校前居住地, eg. 北京', default='北京')
-    parser.add_argument('--district', type=str, help='入校前居住所在区, eg. 海淀区', default='海淀区')
-    parser.add_argument('--street', type=str, help='入校前居住所在街道, eg. 燕园街道', default='燕园街道')
+    parser.add_argument('--district', type=str, help='入校前居住所在区, eg. 海淀区', default='西城区')
+    parser.add_argument('--street', type=str, help='入校前居住所在街道, eg. 燕园街道', default='什刹海街道')
     args = parser.parse_args()
 
     args_public = copy.deepcopy(args)
